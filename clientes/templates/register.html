@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'clientes/css/style.css' %}">
+</head>
+<body>
+    <main id="main-holder">
+
+        <h1>Register</h1>
+        
+        
+
+        <div>
+            <form  action="{% url 'create_user' %}" method="POST" id="login-form"> {% csrf_token %}
+
+                <input type="text" name="name" id="name" class="login-form-field" placeholder="Username">
+                <input type="password" name="pass" id="pass" class="login-form-field" placeholder="Password">
+                <button type="submit" id="login-form-submit"> Register </button>
+
+
+                <p>{{ msg_status }}</p>
+            </form>
+
+
+        </div>
+
+    </main>
+</body>
+</html>

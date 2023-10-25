@@ -15,8 +15,9 @@ def login(request):
             if acess_db:
                 return render(request, 'inside.html', {})
             else:
-                return render(request, 'login.html', {})
-
+                return render(request, 'login.html', {"error": "User not found"})
+        else:
+            return render(request, 'login.html', {"error": ""})
    
     
     elif request.method == "GET":
@@ -27,4 +28,28 @@ def login(request):
 def inside_form(request):
     return render(request, 'inside.html', {})
 
+def create_user(request):
+
+    if request.method == "POST":
+        name = request.POST.get('name')
+        passwd = request.POST.get('pass')
+        db = Cliente.objects.filter(name=name, password=passwd)
+        
+
+        if name != "" and passwd != "":
+            if not db:
+                
+                acess_db = Cliente(name=name, password=passwd)
+                acess_db.save()
+                return render(request, 'register.html', {"msg_status": "Registration successful "})
+            else:
+                return render(request, 'register.html', {"msg_status": "User already exist."})
+        
+        else:
+            return render(request, 'register.html', {})
+
+
+
+    elif request.method == "GET":
+        return render(request, 'register.html', {})
 

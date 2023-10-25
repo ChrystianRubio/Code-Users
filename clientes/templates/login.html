@@ -20,8 +20,17 @@
             <form  action="{% url 'login' %}" method="POST" id="login-form"> {% csrf_token %}
                 <input type="text" name="name" id="name" class="login-form-field" placeholder="Username">
                 <input type="password" name="pass" id="pass" class="login-form-field" placeholder="Password">
-                <button type="submit" id="login-form-submit">OK </button>
-                
+                <button type="submit" id="login-form-submit"> Log in </button>
+
+                <a href="{% url 'create_user' %}">
+                    <button  type="button" id="login-form-submit"> Create new account </button>
+                </a>
+
+                {% if error != "" %}
+                    <p id="error">{{ error }}</p>
+                    
+                {% endif %}
+
             </form>
 
 
