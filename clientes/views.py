@@ -8,20 +8,23 @@ def login(request):
 
         name = request.POST.get('name')
         passwd = request.POST.get('pass')
+        acess_db = Cliente.objects.filter(name=name, password=passwd)
+
 
         if name != "" and passwd != "":
-            db = Cliente(name=name, password=passwd)
-            
-            db.save()
+            if acess_db:
+                return render(request, 'inside.html', {})
+            else:
+                return render(request, 'login.html', {})
+
+   
     
     elif request.method == "GET":
-        db = Cliente.objects.all()
-        
-        print(db)
-        
- 
-    return render(request, 'login.html')
-
     
+        return render(request, 'login.html', {})
+
+
+def inside_form(request):
+    return render(request, 'inside.html', {})
 
 

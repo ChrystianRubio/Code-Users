@@ -5,19 +5,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Users</title>
+    <title>Inside Application</title>
     <link rel="stylesheet" href="{% static 'clientes/css/style.css' %}">
 </head>
-<body>
 
+<body>
     <main id="main-holder">
 
-        <h1>Login</h1>
-        
+        <h1>Inside <strong>Code Users</strong></h1>
         
 
         <div>
-            <form  action="{% url 'login' %}" method="POST" id="login-form"> {% csrf_token %}
+            <form  action="" method="POST" id="login-form"> {% csrf_token %}
                 <input type="text" name="name" id="name" class="login-form-field" placeholder="Username">
                 <input type="password" name="pass" id="pass" class="login-form-field" placeholder="Password">
                 <button type="submit" id="login-form-submit">OK </button>
@@ -27,7 +26,6 @@
 
         </div>
 
-    </main>
-
+    </main>    
 </body>
 </html>
