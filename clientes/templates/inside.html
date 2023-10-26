@@ -1,4 +1,3 @@
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -15,17 +14,28 @@
 
         <h1>Inside <strong>Code Users</strong></h1>
         
+        {% if name == None %}
+            <meta http-equiv="Refresh" content="0; url='{% url 'login' %}' " />                    
+        {% endif %}
 
         <div>
-            <form  action="" method="POST" id="login-form"> {% csrf_token %}
+
+            <form  action="{% url 'del_user' %}" method="POST" id="login-form"> {% csrf_token %}
+
                 <input type="text" name="name" id="name" class="login-form-field" placeholder="Username">
                 <input type="password" name="pass" id="pass" class="login-form-field" placeholder="Password">
-                <button type="submit" id="login-form-submit"> OK </button>
+                <button type="submit" id="login-form-submit"> Delete account </button>
+
                 
-                
+                {% if msg_status != "" %}
+
+                    <p id="msg_status">{{ msg_status }}</p>
+                    
+                {% endif %}
+
+               
             </form>
-
-
+            
         </div>
 
     </main>    
