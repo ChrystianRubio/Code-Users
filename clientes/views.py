@@ -25,8 +25,6 @@ def login(request):
         return render(request, 'login.html', {})
 
 
-def inside_form(request):
-    return render(request, 'inside.html', {})
 
 def create_user(request):
 
