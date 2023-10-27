@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Cliente
+from django.contrib.auth import authenticate
 
 # Create your views here.
 def login(request):
@@ -14,10 +15,15 @@ def login(request):
 
 
         if name != "" and passwd != "":
+
             if acess_db:
+                authenticate(username=name, password=passwd)
+
                 return render(request, 'inside.html', {"name": name})
+            
             else:
                 return render(request, 'login.html', {"error": "User not found"})
+        
         else:
             return render(request, 'login.html', {"error": ""})
 
@@ -37,8 +43,8 @@ def create_user(request):
         
 
         if name != "" and passwd != "":
+            
             if not db:
-                
                 acess_db = Cliente(name=name, password=passwd)
                 acess_db.save()
                 return render(request, 'register.html', {"msg_status": "Registration successful "})
@@ -63,15 +69,19 @@ def del_user(request):
         name = request.POST.get('name')
         passwd = request.POST.get('pass')
 
-        acess_db = Cliente.objects.get(name=name)
-        acess_db.delete()
+        acess_db = Cliente.objects.filter(name=name, password=passwd)
         
-
-        return render(request, 'inside.html', {"msg_status": "Remove successful"})
+        if acess_db: 
+            acess_db.delete()
+            return render(request, 'inside.html', {"msg_status": "Remove successful"})
+        else:
+            return render(request, 'inside.html', {"msg_status": "User not found"})
 
     elif request.method == "GET":
-        name = request.POST.get('name')
-        passwd = request.POST.get('pass')
-        print(name, passwd)
-        return render(request, 'inside.html', {"msg_status": ""})
+        
+        if request.user.is_authenticated:
+            return render(request, 'inside.html', {"msg_status": ""})
+        
+        else:
+            return render(request, 'login.html', {"msg_status": ""})
 

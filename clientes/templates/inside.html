@@ -14,10 +14,9 @@
 
         <h1>Inside <strong>Code Users</strong></h1>
         
-        {% if name == None %}
-            <meta http-equiv="Refresh" content="0; url='{% url 'login' %}' " />                    
-        {% endif %}
+        
 
+        
         <div>
 
             <form  action="{% url 'del_user' %}" method="POST" id="login-form"> {% csrf_token %}
@@ -27,11 +26,7 @@
                 <button type="submit" id="login-form-submit"> Delete account </button>
 
                 
-                {% if msg_status != "" %}
-
-                    <p id="msg_status">{{ msg_status }}</p>
-                    
-                {% endif %}
+                
 
                
             </form>
