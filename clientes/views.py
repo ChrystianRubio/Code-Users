@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Cliente
 from django.contrib.auth import authenticate, get_user, logout
 from django.contrib.auth import login as login_system
@@ -23,7 +23,7 @@ def login(request):
                 auth_acess = authenticate(request,username=name, password=passwd)
                 
                 if not auth_acess:
-                    print("autho acess>>>>> ", auth_acess)
+                    
                     
                     user = User.objects.create_user(username=name)
                     user.set_password(passwd)
@@ -34,13 +34,15 @@ def login(request):
                 if auth_acess is not None:
                     login_system(request, auth_acess)
 
-                return render(request, 'inside.html', {"name": name, "pass": passwd, 
-                                                        "email": str(acess_db[0].email), "number": str(acess_db[0].number)})
+                return redirect('del_user')
+
             else:
-                return render(request, 'login.html', {"error": "User not found"})
+                return redirect('login')
+                #return render(request, 'login.html', {"error": "User not found"})
         
         else:
-            return render(request, 'login.html', {"error": ""})
+            #return render(request, 'login.html', {"error": ""})
+            return redirect('login')
 
 
     elif request.method == "GET":
@@ -54,7 +56,7 @@ def create_user(request):
     if request.method == "POST":
         name = request.POST.get('name')
         passwd = request.POST.get('pass')
-        db = Cliente.objects.filter(name=name, password=passwd)
+        db = Cliente.objects.filter(name=name)
         
 
         if name != "" and passwd != "":
@@ -97,9 +99,14 @@ def del_user(request):
     elif request.method == "GET":
         
         if request.user.is_authenticated:
-            print(f'request.user>>> {get_user(request)}')
-            return render(request, 'inside.html', {"msg_status": request.user})
+           
+            acess_db = Cliente.objects.filter(name=str(get_user(request)))
+            
+            return render(request, 'inside.html', {"msg_status": request.user, "name": acess_db[0].name,
+                                                   "email": acess_db[0].email, "number": acess_db[0].number,
+                                                    "pass": "**********" })
         
         else:
-            return render(request, 'login.html', {"msg_status": ""})
+            return redirect('login')
+            
 
