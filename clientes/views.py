@@ -85,7 +85,7 @@ def del_user(request):
         email  = request.POST.get('email')
         number = request.POST.get('number')
 
-        acess_db = Cliente.objects.filter(name=name, password=passwd)
+        acess_db = Cliente.objects.filter(name=str(get_user(request)))
         
         if acess_db: 
             acess_db.delete()
