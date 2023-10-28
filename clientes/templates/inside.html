@@ -12,24 +12,35 @@
 <body>
     <main id="main-holder">
 
-        <h1>Inside <strong>Code Users</strong></h1>
         
         
 
         
         <div>
+            <h1>Inside <strong>Code Users</strong></h1>
+        
+            <form  action="" method="POST" id="login-form"> {% csrf_token %}
 
-            <form  action="{% url 'del_user' %}" method="POST" id="login-form"> {% csrf_token %}
-
-                <input type="text" name="name" id="name" class="login-form-field" placeholder="Username">
-                <input type="password" name="pass" id="pass" class="login-form-field" placeholder="Password">
-                <button type="submit" id="login-form-submit"> Delete account </button>
-
-                
-                
-
+                <input type="text" name="name" id="name" class="login-form-field" placeholder="{{ name }}">
+                <input type="text" name="email" id="email" class="login-form-field" placeholder="{{ email }}">
+                <input type="text" name="number" id="number" class="login-form-field" placeholder="{{ number }}">
+                <input type="password" name="pass" id="pass" class="login-form-field" placeholder="{{ pass }}">
+                <button type="submit" id="login-form-submit"> Update informations </button>
                
             </form>
+            
+            <form  action="{% url 'del_user' %}" method="POST" id="login-form"> {% csrf_token %}
+
+                <button type="submit" id="login-form-submit"> Delete account </button>
+                
+                {% if msg_status != "" %}
+                    <p id="error">{{ msg_status }}</p>
+                    
+                {% endif %}
+               
+            </form>
+
+
             
         </div>
 
