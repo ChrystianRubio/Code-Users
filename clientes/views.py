@@ -16,33 +16,33 @@ def login(request):
         acess_db = Cliente.objects.filter(name=name, password=passwd)
         
 
-        if name != "" and passwd != "":
+        #if name != "" and passwd != "":
 
-            if acess_db:
+        if acess_db:
 
-                auth_acess = authenticate(request,username=name, password=passwd)
+            auth_acess = authenticate(request,username=name, password=passwd)
                 
-                if not auth_acess:
+            if not auth_acess:
                     
                     
-                    user = User.objects.create_user(username=name)
-                    user.set_password(passwd)
-                    user.save()
-                    auth_acess = authenticate(request, username=name, password=passwd)
+                user = User.objects.create_user(username=name)
+                user.set_password(passwd)
+                user.save()
+                auth_acess = authenticate(request, username=name, password=passwd)
 
                
-                if auth_acess is not None:
-                    login_system(request, auth_acess)
+            if auth_acess is not None:
+                login_system(request, auth_acess)
 
-                return redirect('del_user')
+            return redirect('del_user')
 
-            else:
-                return redirect('login')
-                #return render(request, 'login.html', {"error": "User not found"})
-        
         else:
+            #return redirect('login')
+            return render(request, 'login.html', {"error": "User not found"})
+        
+        #else:
             #return render(request, 'login.html', {"error": ""})
-            return redirect('login')
+        #    return redirect('login')
 
 
     elif request.method == "GET":
@@ -76,6 +76,30 @@ def create_user(request):
     elif request.method == "GET":
         return render(request, 'register.html', {})
 
+
+def update_user(request):
+
+    if request.user.is_authenticated and request.method == "POST":
+        
+
+        #name   = request.POST.get('name')
+        passwd = request.POST.get('pass')
+        email  = request.POST.get('email')
+        number = request.POST.get('number')
+
+        acess_db = Cliente.objects.get(name=get_user(request))
+     
+        if passwd:
+            acess_db.password = passwd
+        if email:
+            acess_db.email = email
+        if number:
+            acess_db.number = number
+        
+        acess_db.save()
+        
+        return redirect('del_user')
+        #return render(request, 'inside.html', {"msg_status": "Update successful"})
 
 def del_user(request):
 

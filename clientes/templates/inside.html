@@ -19,7 +19,7 @@
         <div>
             <h1>Inside <strong>Code Users</strong></h1>
         
-            <form  action="" method="POST" id="login-form"> {% csrf_token %}
+            <form  action="{% url 'update_user' %}" method="POST" id="login-form"> {% csrf_token %}
 
                 <input type="text" name="name" id="name" class="login-form-field" placeholder="{{ name }}">
                 <input type="text" name="email" id="email" class="login-form-field" placeholder="{{ email }}">
