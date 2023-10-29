@@ -34,7 +34,7 @@ def login(request):
             if auth_acess is not None:
                 login_system(request, auth_acess)
 
-            return redirect('del_user')
+            return redirect('inside')
 
         else:
             #return redirect('login')
@@ -82,7 +82,7 @@ def update_user(request):
     if request.user.is_authenticated and request.method == "POST":
         
 
-        #name   = request.POST.get('name')
+       
         passwd = request.POST.get('pass')
         email  = request.POST.get('email')
         number = request.POST.get('number')
@@ -98,39 +98,40 @@ def update_user(request):
         
         acess_db.save()
         
-        return redirect('del_user')
+        return redirect('inside')
         #return render(request, 'inside.html', {"msg_status": "Update successful"})
+
+
+def inside(request):
+
+    if request.method == "GET":
+        
+        if request.user.is_authenticated:
+           
+            acess_db = Cliente.objects.filter(name=str(get_user(request)))
+            
+            return render(request, 'inside.html', {"msg_status": "", "name": acess_db[0].name,
+                                                   "email": acess_db[0].email, "number": acess_db[0].number,
+                                                    "pass": "**********" })
+        
+        else:
+            return redirect('login')
+
 
 def del_user(request):
 
-
     if request.method == "POST":
-
-        name   = request.POST.get('name')
-        passwd = request.POST.get('pass')
-        email  = request.POST.get('email')
-        number = request.POST.get('number')
 
         acess_db = Cliente.objects.filter(name=str(get_user(request)))
         
         if acess_db: 
             acess_db.delete()
             logout(request)
-            return render(request, 'inside.html', {"msg_status": "Remove successful"})
+            return render(request, 'inside.html', {"msg_status": "Remove successful", "del_user": True})
         else:
             return render(request, 'inside.html', {"msg_status": "User not found"})
 
-    elif request.method == "GET":
-        
-        if request.user.is_authenticated:
-           
-            acess_db = Cliente.objects.filter(name=str(get_user(request)))
-            
-            return render(request, 'inside.html', {"msg_status": request.user, "name": acess_db[0].name,
-                                                   "email": acess_db[0].email, "number": acess_db[0].number,
-                                                    "pass": "**********" })
-        
-        else:
-            return redirect('login')
+    if request.method == "GET":
+        return redirect('login')
             
 

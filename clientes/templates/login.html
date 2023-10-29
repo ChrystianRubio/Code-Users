@@ -14,15 +14,18 @@
                 
 
         <div>
-            <h1>Login</h1>
+            
             <form  action="{% url 'login' %}" method="POST" id="login-form"> {% csrf_token %}
+                <h1>Login</h1>
                 <input type="text" name="name" id="name" class="login-form-field" placeholder="Username">
                 <input type="password" name="pass" id="pass" class="login-form-field" placeholder="Password">
                 <button type="submit" id="login-form-submit"> Log in </button>
 
-                <a href="{% url 'create_user' %}">
-                    <button  type="button" id="login-form-submit"> Create new account </button>
-                </a>
+                
+                <button  type="button" id="login-form-submit"> Create new account 
+                    <a href="{% url 'create_user' %}"></a>
+                </button>
+                
 
                 {% if error != "" %}
                     <p id="error">{{ error }}</p>
