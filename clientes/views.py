@@ -112,7 +112,7 @@ def inside(request):
             
             return render(request, 'inside.html', {"msg_status": "", "name": acess_db[0].name,
                                                    "email": acess_db[0].email, "number": acess_db[0].number,
-                                                    "pass": "**********" })
+                                                   "pass": "**********" })
         
         else:
             return redirect('login')

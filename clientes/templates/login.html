@@ -22,9 +22,6 @@
                 <button type="submit" id="login-form-submit"> Log in </button>
 
                 
-                <button  type="button" id="login-form-submit"> Create new account 
-                    <a href="{% url 'create_user' %}"></a>
-                </button>
                 
 
                 {% if error != "" %}
@@ -34,6 +31,13 @@
 
             </form>
 
+
+             
+            <a href="{% url 'create_user' %}">
+                <button  type="button" id="login-form-submit"> Create new account 
+                </button>
+            </a>
+            
 
         </div>
 
